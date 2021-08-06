@@ -18,6 +18,7 @@ class PostsController < ApplicationController
       redirect_to @post, notice: "投稿しました"
     else
       flash.now[:alert] = "投稿に失敗しました"
+      render :new
     end
   end
 
@@ -38,9 +39,13 @@ class PostsController < ApplicationController
     redirect_to root_path, alert: "削除しました"
   end
 
-    private
+  private
 
-    def post_params
-      params.require(:post).permit(:title, :content)
-    end
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :content)
+  end
 end
